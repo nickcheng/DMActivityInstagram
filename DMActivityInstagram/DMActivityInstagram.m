@@ -67,12 +67,14 @@
   if (self.shareString)
     [self.documentController setAnnotation:@{@"InstagramCaption" : self.shareString}];
 
-  if (self.avc) {
+  if (self.avc && self.avc.presentingViewController) {
     [self.avc dismissViewControllerAnimated:YES completion:^ {
       if (![self.documentController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES])
         NSLog(@"couldn't present document interaction controller");
-
     }];
+  } else {
+    if (![self.documentController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES])
+      NSLog(@"couldn't present document interaction controller");
   }
 }
 
